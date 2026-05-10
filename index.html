@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lyna · L'IA qui récupère vos leads immo perdus</title>
+    <meta name="description" content="Un assistant IA qui qualifie vos leads en moins de 2 minutes, 24/7, et relance les tièdes pendant 90 jours. Plus aucune vente perdue par manque de réactivité." />
+    <meta property="og:title" content="Lyna · L'IA qui récupère vos leads immo perdus" />
+    <meta property="og:description" content="78% des leads immo ne sont jamais rappelés dans les 24h. Lyna les récupère pendant que vous dormez." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            colors: {
+              ink: { 950: '#050507', 900: '#0a0a0d', 800: '#111116', 700: '#1a1a22', 600: '#252531' },
+              accent: { 500: '#a78bfa', 600: '#8b5cf6', 700: '#7c3aed' },
+            },
+            animation: {
+              'fade-up': 'fadeUp 0.8s ease-out forwards',
+              'glow': 'glow 4s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              glow: {
+                '0%, 100%': { opacity: '0.3' },
+                '50%': { opacity: '0.6' },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { font-family: 'Inter', system-ui, sans-serif; background: #050507; color: #f4f4f7; -webkit-font-smoothing: antialiased; }
+      .gradient-text {
+        background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 60%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .glow-orb {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .card-glass {
+        background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+      }
+      .card-glass:hover {
+        border-color: rgba(167,139,250,0.3);
+        background: linear-gradient(180deg, rgba(167,139,250,0.06) 0%, rgba(255,255,255,0.02) 100%);
+        transform: translateY(-2px);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+        box-shadow: 0 4px 24px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+        transition: all 0.2s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      .grid-bg {
+        background-image:
+          linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      }
+      .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s, transform 0.8s; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+  </head>
+  <body class="bg-ink-950 text-white overflow-x-hidden">
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-ink-950/70 border-b border-white/5">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2 text-lg font-semibold">
+          <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white text-sm font-bold">L</span>
+          <span>Lyna</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+          <a href="#solution" class="hover:text-white transition">Solution</a>
+          <a href="#packages" class="hover:text-white transition">Tarifs</a>
+          <a href="#process" class="hover:text-white transition">Comment ça marche</a>
+          <a href="#faq" class="hover:text-white transition">FAQ</a>
+        </div>
+        <a href="#cta" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium text-white">Réserver une démo</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+      <div class="glow-orb w-[600px] h-[600px] bg-accent-600/30 -top-40 -left-40"></div>
+      <div class="glow-orb w-[500px] h-[500px] bg-accent-500/20 top-20 right-0"></div>
+      <div class="absolute inset-0 grid-bg"></div>
+
+      <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/70 mb-8 reveal">
+          <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+          Spécialisé pour les agences immobilières indépendantes
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 reveal">
+          Vos agences immo perdent <span class="text-accent-500">30% de leurs leads.</span><br/>
+          <span class="gradient-text">Lyna les récupère pendant que vous dormez.</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 reveal">
+          Un assistant IA qui qualifie chaque lead en moins de 2 minutes, 24/7, et relance les tièdes pendant 90 jours. Plus aucune vente perdue par manque de réactivité.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+          <a href="#cta" class="btn-primary px-7 py-4 rounded-xl text-base font-medium text-white inline-flex items-center gap-2">
+            Réserver une démo de 15 min
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#solution" class="px-7 py-4 rounded-xl text-base font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20 transition">
+            Voir comment ça marche
+          </a>
+        </div>
+
+        <div class="mt-16 grid grid-cols-3 gap-6 max-w-2xl mx-auto reveal">
+          <div class="text-center">
+            <div class="text-3xl font-bold gradient-text">2 min</div>
+            <div class="text-xs text-white/50 mt-1">Temps de réponse</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold gradient-text">24/7</div>
+            <div class="text-xs text-white/50 mt-1">Disponibilité</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold gradient-text">+30%</div>
+            <div class="text-xs text-white/50 mt-1">Leads récupérés</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="relative py-28 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Le problème</div>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Pourquoi 70% des leads immo ne deviennent jamais des ventes.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="w-12 h-12 rounded-xl bg-accent-600/20 border border-accent-500/30 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div class="text-5xl font-bold mb-3 gradient-text">78%</div>
+            <h3 class="text-lg font-semibold mb-2">des leads ne sont jamais rappelés dans les 24h</h3>
+            <p class="text-sm text-white/60 leading-relaxed">Un prospect qui attend plus de 2h pour une réponse a déjà contacté votre concurrent. La fenêtre est plus courte qu'on le pense.</p>
+          </div>
+
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="w-12 h-12 rounded-xl bg-accent-600/20 border border-accent-500/30 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="text-5xl font-bold mb-3 gradient-text">6h</div>
+            <h3 class="text-lg font-semibold mb-2">/semaine perdues sur des questions répétitives</h3>
+            <p class="text-sm text-white/60 leading-relaxed">Frais d'agence, mandats, visites, documents : 80% des questions clients sont les mêmes. Vos agents répondent encore et encore.</p>
+          </div>
+
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="w-12 h-12 rounded-xl bg-accent-600/20 border border-accent-500/30 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </div>
+            <div class="text-5xl font-bold mb-3 gradient-text">50%</div>
+            <h3 class="text-lg font-semibold mb-2">du pipeline disparaît sans relance</h3>
+            <p class="text-sm text-white/60 leading-relaxed">Les leads "tièdes" sont oubliés au bout de 7 jours. Sans relance automatique, c'est la moitié de votre pipeline qui s'évapore chaque mois.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section id="solution" class="relative py-28 px-6">
+      <div class="glow-orb w-[400px] h-[400px] bg-accent-700/20 left-1/2 -translate-x-1/2 top-20"></div>
+      <div class="relative z-10 max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">La solution</div>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Lyna travaille pendant que vous vendez.</h2>
+          <p class="text-lg text-white/60 max-w-2xl mx-auto">Trois super-pouvoirs intégrés à votre stack actuelle. Aucune migration, aucune complexité.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Qualification 24/7</h3>
+            <p class="text-sm text-white/65 leading-relaxed mb-4">Lyna répond à chaque lead entrant (formulaire site, email, DM) en moins de 2 minutes. Elle pose les bonnes questions — budget, timing, type de bien, secteur — score le lead, et vous transfère uniquement les chauds par SMS.</p>
+            <ul class="text-sm text-white/55 space-y-2">
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Réponse instantanée 24h/24</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Scoring automatique chaud/tiède/froid</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Notifications SMS pour les chauds</li>
+            </ul>
+          </div>
+
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Relance intelligente</h3>
+            <p class="text-sm text-white/65 leading-relaxed mb-4">Pas de réponse au premier contact ? Lyna lance une séquence automatique de 5 messages sur 90 jours, personnalisés selon le profil du prospect. Ce qui partait à la concurrence revient dans votre pipeline.</p>
+            <ul class="text-sm text-white/55 space-y-2">
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Séquence 90 jours automatisée</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Messages personnalisés par profil</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Email + SMS combinés</li>
+            </ul>
+          </div>
+
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Booking automatique</h3>
+            <p class="text-sm text-white/65 leading-relaxed mb-4">Lyna a accès à votre agenda. Elle bookke directement les visites avec les leads qualifiés, en proposant des créneaux qui vous arrangent. Vous ouvrez votre calendrier le matin : il est déjà rempli.</p>
+            <ul class="text-sm text-white/55 space-y-2">
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Sync calendrier en temps réel</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Visites confirmées automatiquement</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Rappels prospects automatiques</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section id="packages" class="relative py-28 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Tarifs</div>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Choisissez votre niveau d'autopilote.</h2>
+          <p class="text-lg text-white/60 max-w-2xl mx-auto">Sans engagement. Mensuel. Si Lyna ne vous fait pas gagner d'argent, vous résiliez.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- STARTER -->
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="text-sm font-medium text-white/50 mb-2">STARTER</div>
+            <h3 class="text-xl font-semibold mb-1">Le Réceptionniste 24/7</h3>
+            <div class="mt-6 mb-6">
+              <div class="text-4xl font-bold">490€<span class="text-base font-normal text-white/50">/mois HT</span></div>
+              <div class="text-sm text-white/50 mt-1">+ 1 500€ de setup unique</div>
+            </div>
+            <a href="#cta" class="block w-full text-center py-3 rounded-xl border border-white/10 hover:border-white/30 text-sm font-medium transition mb-6">Réserver une démo</a>
+            <ul class="text-sm text-white/65 space-y-3">
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Qualification automatique 24/7</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Scoring chaud/tiède/froid</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Notification SMS lead chaud</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Setup en 7 jours</li>
+            </ul>
+          </div>
+
+          <!-- PRO (highlighted) -->
+          <div class="relative rounded-2xl p-8 reveal" style="background: linear-gradient(180deg, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.02) 100%); border: 1px solid rgba(167,139,250,0.4);">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-accent-500 to-accent-700">RECOMMANDÉ</div>
+            <div class="text-sm font-medium text-accent-500 mb-2">PRO</div>
+            <h3 class="text-xl font-semibold mb-1">Le Réceptionniste + Le Relanceur</h3>
+            <div class="mt-6 mb-6">
+              <div class="text-4xl font-bold">890€<span class="text-base font-normal text-white/50">/mois HT</span></div>
+              <div class="text-sm text-white/50 mt-1">+ 2 500€ de setup unique</div>
+            </div>
+            <a href="#cta" class="block w-full text-center py-3 rounded-xl btn-primary text-sm font-medium text-white mb-6">Réserver une démo</a>
+            <ul class="text-sm text-white/75 space-y-3">
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Tout du Starter</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Relance automatique 90 jours</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> FAQ propriétaires/locataires 24/7</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Email + SMS combinés</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Setup en 14 jours</li>
+            </ul>
+          </div>
+
+          <!-- ELITE -->
+          <div class="card-glass rounded-2xl p-8 reveal">
+            <div class="text-sm font-medium text-white/50 mb-2">ELITE</div>
+            <h3 class="text-xl font-semibold mb-1">L'Agence Augmentée</h3>
+            <div class="mt-6 mb-6">
+              <div class="text-4xl font-bold">1 490€<span class="text-base font-normal text-white/50">/mois HT</span></div>
+              <div class="text-sm text-white/50 mt-1">+ 4 500€ de setup unique</div>
+            </div>
+            <a href="#cta" class="block w-full text-center py-3 rounded-xl border border-white/10 hover:border-white/30 text-sm font-medium transition mb-6">Réserver une démo</a>
+            <ul class="text-sm text-white/65 space-y-3">
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Tout du Pro</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Booking RDV automatique</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Reporting mensuel</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> FAQ biens en ligne</li>
+              <li class="flex items-start gap-2"><span class="text-accent-500 mt-0.5">✓</span> Setup en 21 jours</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="relative py-28 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Comment ça marche</div>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight">De zéro à autopilote en 2 semaines.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-sm font-bold text-accent-500 mb-3">JOUR 1</div>
+            <h3 class="font-semibold mb-2">Audit</h3>
+            <p class="text-sm text-white/60 leading-relaxed">On analyse ensemble vos leads entrants, votre process actuel, votre CRM.</p>
+          </div>
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-sm font-bold text-accent-500 mb-3">JOUR 2-7</div>
+            <h3 class="font-semibold mb-2">Setup</h3>
+            <p class="text-sm text-white/60 leading-relaxed">On configure Lyna : ton de réponse, scripts, intégration agenda, FAQ.</p>
+          </div>
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-sm font-bold text-accent-500 mb-3">JOUR 8-10</div>
+            <h3 class="font-semibold mb-2">Test</h3>
+            <p class="text-sm text-white/60 leading-relaxed">Lyna tourne en mode "shadow" : elle répond, vous validez, on ajuste.</p>
+          </div>
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-sm font-bold text-accent-500 mb-3">JOUR 11+</div>
+            <h3 class="font-semibold mb-2">Production</h3>
+            <p class="text-sm text-white/60 leading-relaxed">Lyna gère vos leads en autonomie. Vous recevez les chauds. Vous vendez.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="relative py-28 px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-16 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">FAQ</div>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Les questions qu'on nous pose souvent.</h2>
+        </div>
+
+        <div class="space-y-4">
+          <details class="card-glass rounded-xl p-6 group reveal">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Combien de temps pour le setup ?</span>
+              <svg class="w-5 h-5 text-white/50 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <p class="text-sm text-white/60 mt-4 leading-relaxed">7 à 21 jours selon le package choisi. Vous n'avez quasiment rien à faire — on s'occupe de tout, vous validez à chaque étape.</p>
+          </details>
+
+          <details class="card-glass rounded-xl p-6 group reveal">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Ça marche avec mon CRM ?</span>
+              <svg class="w-5 h-5 text-white/50 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <p class="text-sm text-white/60 mt-4 leading-relaxed">Oui. Lyna s'intègre à HubSpot, Pipedrive, Apimo, Hektor, Adapt Immo, et la majorité des CRM immo. Si votre CRM n'est pas listé, on s'adapte.</p>
+          </details>
+
+          <details class="card-glass rounded-xl p-6 group reveal">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Et si Lyna répond mal à un client ?</span>
+              <svg class="w-5 h-5 text-white/50 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <p class="text-sm text-white/60 mt-4 leading-relaxed">Lyna est entraînée sur votre ton, vos process, vos limites. Elle ne s'engage jamais à votre place. Pour les sujets sensibles, elle transfère à l'humain.</p>
+          </details>
+
+          <details class="card-glass rounded-xl p-6 group reveal">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Y a-t-il un engagement ?</span>
+              <svg class="w-5 h-5 text-white/50 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <p class="text-sm text-white/60 mt-4 leading-relaxed">Non. Mensuel, sans engagement. Si Lyna ne vous fait pas gagner d'argent, vous résiliez.</p>
+          </details>
+
+          <details class="card-glass rounded-xl p-6 group reveal">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Mes données sont-elles protégées ?</span>
+              <svg class="w-5 h-5 text-white/50 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <p class="text-sm text-white/60 mt-4 leading-relaxed">100% RGPD. Données hébergées en Europe, chiffrées, jamais utilisées pour entraîner d'autres modèles.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="relative py-28 px-6">
+      <div class="glow-orb w-[500px] h-[500px] bg-accent-600/30 left-1/2 -translate-x-1/2 top-0"></div>
+      <div class="relative z-10 max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6 reveal">
+          <span class="gradient-text">Prêt à arrêter de perdre des ventes ?</span>
+        </h2>
+        <p class="text-lg text-white/60 mb-10 reveal">
+          15 minutes en visio. On vous montre exactement ce que Lyna ferait pour votre agence. Pas de pitch commercial, juste une démo concrète. Si ce n'est pas pour vous, vous le saurez en 5 minutes.
+        </p>
+        <a href="https://calendly.com/orchides-uselyna/30min" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium text-white reveal">
+          Réserver ma démo
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <p class="text-xs text-white/40 mt-6 reveal">Aucune carte requise · 100% RGPD · Sans engagement</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-10 px-6">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white text-xs font-bold">L</span>
+          <span>Lyna · Automatisation IA pour agences immobilières</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="mailto:contact@uselyna.com" class="hover:text-white/70 transition">contact@uselyna.com</a>
+          <a href="mentions-legales.html" class="hover:text-white/70 transition">Mentions légales</a>
+          <a href="confidentialite.html" class="hover:text-white/70 transition">Confidentialité</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Reveal on scroll
+      const observer = new IntersectionObserver(
+        entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>
