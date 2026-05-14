@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment ça marche · Lyna</title>
+    <meta name="description" content="Le parcours complet Lyna — de la demande prospect au RDV signé. 6 canaux d'entrée, 3 sorties pour votre agence." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            colors: {
+              ink: { 950: '#050507', 900: '#0a0a0d', 800: '#111116', 700: '#1a1a22', 600: '#252531' },
+              accent: { 500: '#a78bfa', 600: '#8b5cf6', 700: '#7c3aed' },
+            },
+            animation: {
+              'fade-up': 'fadeUp 0.8s ease-out forwards',
+            },
+            keyframes: {
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { font-family: 'Inter', system-ui, sans-serif; background: #050507; color: #f4f4f7; -webkit-font-smoothing: antialiased; }
+      .gradient-text {
+        background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 60%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .glow-orb {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .card-glass {
+        background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+      }
+      .card-glass:hover {
+        border-color: rgba(167,139,250,0.3);
+        background: linear-gradient(180deg, rgba(167,139,250,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+        box-shadow: 0 4px 24px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+        transition: all 0.2s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      .grid-bg {
+        background-image:
+          linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      }
+      .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s, transform 0.8s; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      /* Mockup styles */
+      .phone-mockup {
+        background: #1a1a22;
+        border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 36px;
+        padding: 14px 10px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        max-width: 280px;
+        margin: 0 auto;
+      }
+      .phone-screen {
+        background: #050507;
+        border-radius: 24px;
+        padding: 20px 14px;
+        min-height: 380px;
+      }
+      .notif {
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 12px;
+        margin-bottom: 10px;
+        backdrop-filter: blur(20px);
+      }
+      .crm-row {
+        display: flex; align-items: center; gap: 12px;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.85rem;
+      }
+      .crm-row:last-child { border-bottom: none; }
+      .badge-hot { background: rgba(248, 113, 113, 0.15); color: #fca5a5; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+      .badge-warm { background: rgba(251, 191, 36, 0.15); color: #fcd34d; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+      .badge-cold { background: rgba(96, 165, 250, 0.15); color: #93c5fd; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+    </style>
+  </head>
+  <body class="bg-ink-950 text-white">
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-ink-950/70 border-b border-white/5">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2 text-lg font-semibold">
+          <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white text-sm font-bold">L</span>
+          <span>Lyna</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+          <a href="index.html#solution" class="hover:text-white transition">Solution</a>
+          <a href="index.html#packages" class="hover:text-white transition">Tarifs</a>
+          <a href="comment-ca-marche.html" class="text-white transition">Comment ça marche</a>
+          <a href="index.html#faq" class="hover:text-white transition">FAQ</a>
+        </div>
+        <a href="index.html#cta" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium text-white">Réserver une démo</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+      <div class="glow-orb w-[500px] h-[500px] bg-accent-600/25 -top-40 -left-40"></div>
+      <div class="glow-orb w-[400px] h-[400px] bg-accent-500/15 top-20 right-0"></div>
+      <div class="absolute inset-0 grid-bg"></div>
+
+      <div class="relative z-10 max-w-5xl mx-auto text-center">
+        <div class="text-sm font-medium text-accent-500 mb-3 reveal">Le parcours complet</div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 reveal">
+          De la <span class="text-accent-500">demande prospect</span> au <span class="gradient-text">RDV signé</span>.
+        </h1>
+        <p class="text-lg md:text-xl text-white/60 max-w-3xl mx-auto reveal">
+          6 canaux d'entrée pour vos prospects. 3 sorties pour votre agence. Lyna pilote le tout en autonomie, 24h/24, pendant que vous closeurs.
+        </p>
+      </div>
+    </section>
+
+    <!-- BIG PICTURE — Schéma -->
+    <section class="relative py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Vue d'ensemble</div>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Qui voit quoi, qui fait quoi.</h2>
+        </div>
+
+        <div class="card-glass rounded-2xl p-8 md:p-12 reveal">
+
+          <!-- Étage 1 : Prospect -->
+          <div class="text-center mb-6">
+            <div class="inline-block px-6 py-3 rounded-xl border-2 border-accent-500/40 bg-accent-600/10">
+              <div class="text-xs text-white/50 mb-1">Étape 1</div>
+              <div class="text-lg font-semibold">👤 Mme Martin — votre prospect</div>
+              <div class="text-sm text-white/60">cherche un T3 à Bordeaux centre, budget 280k</div>
+            </div>
+          </div>
+
+          <!-- Flèche -->
+          <div class="text-center text-3xl text-white/30 mb-2">↓</div>
+          <div class="text-center text-xs text-white/50 mb-4">Elle contacte votre agence par un de ces 6 canaux ↓</div>
+
+          <!-- 6 canaux en grille -->
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
+            <div class="text-center p-3 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-1">✉️</div>
+              <div class="text-xs text-white/70 font-medium">Email</div>
+            </div>
+            <div class="text-center p-3 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-1">📝</div>
+              <div class="text-xs text-white/70 font-medium">Formulaire site</div>
+            </div>
+            <div class="text-center p-3 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-1">💬</div>
+              <div class="text-xs text-white/70 font-medium">Chat site</div>
+            </div>
+            <div class="text-center p-3 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-1">📱</div>
+              <div class="text-xs text-white/70 font-medium">DM Insta</div>
+            </div>
+            <div class="text-center p-3 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-1">📞</div>
+              <div class="text-xs text-white/70 font-medium">SMS</div>
+            </div>
+            <div class="text-center p-3 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-1">🏠</div>
+              <div class="text-xs text-white/70 font-medium">SeLoger / LBC</div>
+            </div>
+          </div>
+
+          <!-- Flèche -->
+          <div class="text-center text-3xl text-white/30 mb-2">↓</div>
+
+          <!-- Lyna IA -->
+          <div class="text-center mb-6">
+            <div class="inline-block px-8 py-4 rounded-xl bg-gradient-to-r from-accent-600 to-accent-700 shadow-2xl shadow-accent-600/40">
+              <div class="text-xs text-white/80 mb-1">Étape 2 — automatique</div>
+              <div class="text-xl font-bold">🤖 Lyna IA</div>
+              <div class="text-sm text-white/90 mt-1">Qualifie · Score · Bookke un RDV</div>
+            </div>
+          </div>
+
+          <!-- Flèche -->
+          <div class="text-center text-3xl text-white/30 mb-2">↓</div>
+          <div class="text-center text-xs text-white/50 mb-4">3 actions automatiques pour votre agence ↓</div>
+
+          <!-- 3 sorties -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+            <div class="text-center p-4 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-2">🔥</div>
+              <div class="text-sm font-medium text-white">SMS au patron</div>
+              <div class="text-xs text-white/50 mt-1">si lead chaud</div>
+            </div>
+            <div class="text-center p-4 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-2">📊</div>
+              <div class="text-sm font-medium text-white">Lead créé dans CRM</div>
+              <div class="text-xs text-white/50 mt-1">Apimo, Hektor, Pipedrive...</div>
+            </div>
+            <div class="text-center p-4 rounded-lg bg-white/5 border border-white/10">
+              <div class="text-2xl mb-2">📅</div>
+              <div class="text-sm font-medium text-white">RDV dans agenda</div>
+              <div class="text-xs text-white/50 mt-1">Google / Outlook</div>
+            </div>
+          </div>
+
+          <!-- Flèche -->
+          <div class="text-center text-3xl text-white/30 mb-2">↓</div>
+
+          <!-- Agent humain -->
+          <div class="text-center">
+            <div class="inline-block px-6 py-3 rounded-xl border-2 border-green-500/40 bg-green-600/10">
+              <div class="text-xs text-white/50 mb-1">Étape 3 — vous</div>
+              <div class="text-lg font-semibold">👨‍💼 Vous (l'agent immo)</div>
+              <div class="text-sm text-white/60">Vous ouvrez votre agenda le matin : il est déjà rempli. Vous closeurs.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION : Côté prospect -->
+    <section class="relative py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Côté prospect</div>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Lyna répond où vos prospects vous contactent.</h2>
+          <p class="text-lg text-white/60 max-w-2xl mx-auto">Vos prospects ne changent rien à leurs habitudes. Lyna s'adapte à VOS canaux existants.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Canal 1 — Email -->
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-3xl mb-3">✉️</div>
+            <h3 class="text-lg font-semibold mb-2">Email entrant</h3>
+            <p class="text-sm text-white/60 leading-relaxed mb-4">Mme Martin envoie un mail à <code class="text-accent-500 text-xs">contact@votre-agence.fr</code>. Lyna intercepte et répond en <strong>moins de 2 minutes</strong>, même à 23h ou le dimanche.</p>
+            <div class="text-xs text-white/40 italic">Aucun changement pour le prospect — il pense écrire à un humain.</div>
+          </div>
+
+          <!-- Canal 2 — Formulaire -->
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-3xl mb-3">📝</div>
+            <h3 class="text-lg font-semibold mb-2">Formulaire de votre site</h3>
+            <p class="text-sm text-white/60 leading-relaxed mb-4">Le formulaire de contact de votre site web est branché à Lyna. Dès qu'un prospect soumet, il reçoit une réponse personnalisée par email <strong>en moins de 60 secondes</strong>.</p>
+            <div class="text-xs text-white/40 italic">Intégration via webhook ou Zapier — 5 min de setup.</div>
+          </div>
+
+          <!-- Canal 3 — Chat -->
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-3xl mb-3">💬</div>
+            <h3 class="text-lg font-semibold mb-2">Chat sur votre site</h3>
+            <p class="text-sm text-white/60 leading-relaxed mb-4">Un widget de chat discret en bas à droite de votre site. Les visiteurs cliquent, discutent en direct avec Lyna (comme la démo que vous avez vue).</p>
+            <div class="text-xs text-white/40 italic">Convertit les visiteurs anonymes en leads qualifiés.</div>
+          </div>
+
+          <!-- Canal 4 — Instagram -->
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-3xl mb-3">📱</div>
+            <h3 class="text-lg font-semibold mb-2">DM Instagram / Facebook</h3>
+            <p class="text-sm text-white/60 leading-relaxed mb-4">Vos pages Insta et Facebook reçoivent des DMs ? Lyna y répond automatiquement via l'API Meta officielle. Plus de DMs ignorés faute de temps.</p>
+            <div class="text-xs text-white/40 italic">Particulièrement puissant si vous postez des biens sur Insta.</div>
+          </div>
+
+          <!-- Canal 5 — SMS -->
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-3xl mb-3">📞</div>
+            <h3 class="text-lg font-semibold mb-2">SMS</h3>
+            <p class="text-sm text-white/60 leading-relaxed mb-4">Le numéro affiché sur vos annonces reçoit des SMS de prospects. Lyna y répond par SMS, qualifie, et bookke le RDV — sans aucune intervention humaine.</p>
+            <div class="text-xs text-white/40 italic">Le canal le plus sous-exploité par les agences immo.</div>
+          </div>
+
+          <!-- Canal 6 — Portails -->
+          <div class="card-glass rounded-2xl p-6 reveal">
+            <div class="text-3xl mb-3">🏠</div>
+            <h3 class="text-lg font-semibold mb-2">Portails : SeLoger, LBC, BienIci</h3>
+            <p class="text-sm text-white/60 leading-relaxed mb-4">Les messages des portails arrivent par email transitoire. Lyna les capte, identifie le bien concerné, et répond au prospect — qui croit dialoguer avec votre agence.</p>
+            <div class="text-xs text-white/40 italic">Capte les leads les plus chauds du marché immo français.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION : Côté agence -->
+    <section class="relative py-20 px-6">
+      <div class="glow-orb w-[400px] h-[400px] bg-accent-700/15 left-1/2 -translate-x-1/2 top-20"></div>
+      <div class="relative z-10 max-w-6xl mx-auto">
+        <div class="text-center mb-12 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Côté agence</div>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Vous gardez vos outils, vous gagnez du temps.</h2>
+          <p class="text-lg text-white/60 max-w-2xl mx-auto">Pas de nouveau logiciel à apprendre. Lyna s'intègre à votre CRM, votre agenda et votre téléphone.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+          <!-- Mockup 1 — Notif SMS -->
+          <div class="reveal">
+            <div class="phone-mockup">
+              <div class="phone-screen">
+                <div class="text-center text-xs text-white/40 mb-3">9:41 — Aujourd'hui</div>
+                <div class="notif">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+                    <span class="text-xs font-bold text-red-400">LYNA · LEAD CHAUD</span>
+                    <span class="text-xs text-white/40 ml-auto">à l'instant</span>
+                  </div>
+                  <div class="text-sm text-white font-medium mb-1">🔥 Mme Martin</div>
+                  <div class="text-xs text-white/70 leading-relaxed">T3 Bordeaux centre, budget 280k validé, prêt en cours. <strong>RDV bookké demain 14h</strong> à l'agence.</div>
+                  <div class="text-xs text-accent-500 mt-2 underline">Voir le détail →</div>
+                </div>
+                <div class="notif">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                    <span class="text-xs font-bold text-yellow-400">LYNA · LEAD TIÈDE</span>
+                    <span class="text-xs text-white/40 ml-auto">il y a 22min</span>
+                  </div>
+                  <div class="text-sm text-white font-medium mb-1">M. Dupont</div>
+                  <div class="text-xs text-white/70 leading-relaxed">Cherche T2 Talence, budget pas encore défini. Lyna le relance dans 7 jours.</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <h3 class="text-lg font-semibold mb-1">1️⃣ Notifications SMS sur votre téléphone</h3>
+              <p class="text-sm text-white/60">Vous savez instantanément quand un lead chaud arrive. Vous gardez le contrôle sans rester collé au bureau.</p>
+            </div>
+          </div>
+
+          <!-- Mockup 2 — Dashboard -->
+          <div class="reveal">
+            <div class="card-glass rounded-xl p-5">
+              <div class="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
+                <span class="w-5 h-5 rounded bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white text-[10px] font-bold">L</span>
+                <span class="text-sm font-semibold">Lyna · Dashboard</span>
+                <span class="ml-auto text-xs text-white/50">orchides@uselyna.com</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 mb-4">
+                <div class="bg-white/5 rounded-lg p-2 text-center">
+                  <div class="text-lg font-bold gradient-text">47</div>
+                  <div class="text-[10px] text-white/50">Leads / mois</div>
+                </div>
+                <div class="bg-white/5 rounded-lg p-2 text-center">
+                  <div class="text-lg font-bold gradient-text">12</div>
+                  <div class="text-[10px] text-white/50">RDV bookkés</div>
+                </div>
+                <div class="bg-white/5 rounded-lg p-2 text-center">
+                  <div class="text-lg font-bold gradient-text">+30%</div>
+                  <div class="text-[10px] text-white/50">vs. mois -1</div>
+                </div>
+              </div>
+              <div class="crm-row">
+                <span class="badge-hot">CHAUD</span>
+                <span class="text-white/90 flex-1">Mme Martin · T3 Bordeaux</span>
+                <span class="text-white/40 text-xs">14h</span>
+              </div>
+              <div class="crm-row">
+                <span class="badge-hot">CHAUD</span>
+                <span class="text-white/90 flex-1">Famille Lopez · Maison Pessac</span>
+                <span class="text-white/40 text-xs">11h</span>
+              </div>
+              <div class="crm-row">
+                <span class="badge-warm">TIÈDE</span>
+                <span class="text-white/90 flex-1">M. Dupont · T2 Talence</span>
+                <span class="text-white/40 text-xs">9h</span>
+              </div>
+              <div class="crm-row">
+                <span class="badge-cold">FROID</span>
+                <span class="text-white/90 flex-1">Mme Rivière · curieuse</span>
+                <span class="text-white/40 text-xs">hier</span>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <h3 class="text-lg font-semibold mb-1">2️⃣ Dashboard Lyna (web simple)</h3>
+              <p class="text-sm text-white/60">Toutes vos conversations en cours, filtrables. Vous pouvez intervenir manuellement à tout moment si vous le souhaitez.</p>
+            </div>
+          </div>
+
+          <!-- Mockup 3 — CRM intégré -->
+          <div class="reveal">
+            <div class="card-glass rounded-xl p-5">
+              <div class="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
+                <div class="w-5 h-5 rounded bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold">A</div>
+                <span class="text-sm font-semibold">Votre CRM (Apimo)</span>
+                <span class="ml-auto text-xs text-accent-500">✓ synchronisé avec Lyna</span>
+              </div>
+              <div class="crm-row">
+                <div class="w-8 h-8 rounded-full bg-accent-600/30 flex items-center justify-center text-xs">MM</div>
+                <div class="flex-1">
+                  <div class="text-white/90 font-medium">Mme Martin</div>
+                  <div class="text-[10px] text-white/50">Créée par Lyna · Score: chaud · T3 · 280k</div>
+                </div>
+                <span class="badge-hot">RDV demain 14h</span>
+              </div>
+              <div class="crm-row">
+                <div class="w-8 h-8 rounded-full bg-accent-600/30 flex items-center justify-center text-xs">FL</div>
+                <div class="flex-1">
+                  <div class="text-white/90 font-medium">Famille Lopez</div>
+                  <div class="text-[10px] text-white/50">Créée par Lyna · Score: chaud · Maison · 450k</div>
+                </div>
+                <span class="badge-hot">RDV demain 11h</span>
+              </div>
+              <div class="crm-row">
+                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs">MD</div>
+                <div class="flex-1">
+                  <div class="text-white/90 font-medium">M. Dupont</div>
+                  <div class="text-[10px] text-white/50">Créé par Lyna · Score: tiède · T2 · budget flou</div>
+                </div>
+                <span class="badge-warm">Relance J+7</span>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <h3 class="text-lg font-semibold mb-1">3️⃣ Vos leads créés dans VOTRE CRM</h3>
+              <p class="text-sm text-white/60">Vous gardez Apimo, Hektor, Pipedrive — vos habitudes ne changent pas. Lyna pousse les leads enrichis directement dans votre outil.</p>
+            </div>
+          </div>
+
+          <!-- Mockup 4 — Agenda -->
+          <div class="reveal">
+            <div class="card-glass rounded-xl p-5">
+              <div class="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
+                <div class="w-5 h-5 rounded bg-gradient-to-br from-blue-400 to-green-500 flex items-center justify-center text-white text-[10px]">📅</div>
+                <span class="text-sm font-semibold">Google Calendar — Demain</span>
+              </div>
+              <div class="space-y-2 text-xs">
+                <div class="flex items-center gap-2">
+                  <span class="text-white/40 w-12">10:00</span>
+                  <div class="flex-1 p-2 bg-blue-500/20 border-l-2 border-blue-400 rounded">
+                    <div class="font-medium">Réunion équipe</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-white/40 w-12">11:00</span>
+                  <div class="flex-1 p-2 bg-accent-600/30 border-l-2 border-accent-500 rounded">
+                    <div class="font-medium">🤖 Visite — Famille Lopez (Maison Pessac)</div>
+                    <div class="text-[10px] text-white/60">Bookké par Lyna · 12 rue Sainte-Catherine</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-white/40 w-12">14:00</span>
+                  <div class="flex-1 p-2 bg-accent-600/30 border-l-2 border-accent-500 rounded">
+                    <div class="font-medium">🤖 Visite — Mme Martin (T3 Bordeaux)</div>
+                    <div class="text-[10px] text-white/60">Bookké par Lyna · 12 rue Sainte-Catherine</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-white/40 w-12">16:00</span>
+                  <div class="flex-1 p-2 bg-accent-600/30 border-l-2 border-accent-500 rounded">
+                    <div class="font-medium">🤖 Visite — M. Bertrand (T4 Caudéran)</div>
+                    <div class="text-[10px] text-white/60">Bookké par Lyna · Sur place</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <h3 class="text-lg font-semibold mb-1">4️⃣ Votre agenda se remplit tout seul</h3>
+              <p class="text-sm text-white/60">Lyna a accès à votre Google/Outlook Calendar. Elle bookke directement les RDV — vous arrivez le matin, votre journée est déjà optimisée.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION : Le flux step-by-step -->
+    <section class="relative py-20 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 reveal">
+          <div class="text-sm font-medium text-accent-500 mb-3">Le flux complet</div>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight">D'un mail à un RDV : 5 étapes en 3 minutes.</h2>
+        </div>
+
+        <div class="space-y-4">
+          <div class="card-glass rounded-xl p-6 reveal flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-accent-600 flex items-center justify-center text-white font-bold flex-shrink-0">1</div>
+            <div>
+              <h3 class="font-semibold mb-1">📥 Le prospect contacte votre agence</h3>
+              <p class="text-sm text-white/60">Mme Martin envoie un email à 23h47 un samedi : <em>"Bonjour, je suis intéressée par un T3 à Bordeaux, budget 280k. Pouvez-vous me proposer des biens ?"</em></p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-xl p-6 reveal flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-accent-600 flex items-center justify-center text-white font-bold flex-shrink-0">2</div>
+            <div>
+              <h3 class="font-semibold mb-1">⚡ Lyna répond en moins de 2 minutes</h3>
+              <p class="text-sm text-white/60">Sophie (le nom que vous donnez à Lyna) répond immédiatement : <em>"Bonsoir Mme Martin, ravie de vous lire. Le T3 c'est pour vous seule, ou pour un couple/famille ?"</em></p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-xl p-6 reveal flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-accent-600 flex items-center justify-center text-white font-bold flex-shrink-0">3</div>
+            <div>
+              <h3 class="font-semibold mb-1">🎯 Lyna qualifie en 5-7 questions</h3>
+              <p class="text-sm text-white/60">Sur 5 messages échangés, Lyna collecte : type de bien exact, secteur précis, budget validé, timing d'achat, mode de financement. Mme Martin pense parler à un humain.</p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-xl p-6 reveal flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-accent-600 flex items-center justify-center text-white font-bold flex-shrink-0">4</div>
+            <div>
+              <h3 class="font-semibold mb-1">📅 Lyna propose et bookke un RDV</h3>
+              <p class="text-sm text-white/60">Connectée à votre agenda, Lyna propose 3 créneaux libres et bookke le créneau choisi. Email + SMS de confirmation envoyés au prospect automatiquement.</p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-xl p-6 reveal flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold flex-shrink-0">5</div>
+            <div>
+              <h3 class="font-semibold mb-1">👨‍💼 Vous arrivez le lundi matin</h3>
+              <p class="text-sm text-white/60"><strong>RDV à 14h dans votre agenda. Lead enrichi dans votre CRM. SMS reçu sur votre tél. Toutes les infos sur Mme Martin.</strong> Vous n'avez plus qu'à honorer le RDV et closer. Lyna a déjà fait 80% du travail.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-20 px-6">
+      <div class="glow-orb w-[500px] h-[500px] bg-accent-600/30 left-1/2 -translate-x-1/2 top-0"></div>
+      <div class="relative z-10 max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6 reveal">
+          <span class="gradient-text">Voyez Lyna en action.</span>
+        </h2>
+        <p class="text-lg text-white/60 mb-10 reveal">
+          Testez la conversation live ci-dessous, ou réservez une démo personnalisée de 15 min avec un de nos consultants.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+          <a href="demo.html" class="btn-primary inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-medium text-white">
+            Tester la démo live
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://calendly.com/orchides-uselyna/30min" target="_blank" rel="noopener" class="px-7 py-4 rounded-xl text-base font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20 transition">
+            Réserver une démo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-10 px-6">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white text-xs font-bold">L</span>
+          <span>Lyna · Automatisation IA pour agences immobilières</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="mailto:contact@uselyna.com" class="hover:text-white/70 transition">contact@uselyna.com</a>
+          <a href="mentions-legales.html" class="hover:text-white/70 transition">Mentions légales</a>
+          <a href="confidentialite.html" class="hover:text-white/70 transition">Confidentialité</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>
